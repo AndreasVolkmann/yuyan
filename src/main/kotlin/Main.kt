@@ -32,9 +32,9 @@ suspend fun main(args: Array<String>) {
 }
 
 private suspend fun generate(config: JugenConfig) {
-    val genModel = AzureAiModel(config.modelConfig)
+    val languageModel = AzureAiModel(config.modelConfig)
     val sentenceGenerator = Jugen(
-        SentenceGenerator(genModel),
+        SentenceGenerator(languageModel),
         AudioGenerator(config.audioConfig)
     )
     sentenceGenerator.generate()

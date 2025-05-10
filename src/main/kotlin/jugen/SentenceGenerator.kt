@@ -10,9 +10,9 @@ class SentenceGenerator(val languageModel: LargeLanguageModel) {
     suspend fun generate(word: String): String {
         val chat = Chat(
             mutableListOf(getMessage(word)),
-            ModelOptions(maxTokens = 100)
+            ModelOptions(maxTokens = 150)
         )
-        
+
         val result = languageModel.execute(chat)
         return result
     }
@@ -20,8 +20,8 @@ class SentenceGenerator(val languageModel: LargeLanguageModel) {
     private fun getMessage(word: String): ChatMessage = ChatMessage(
         "user",
         """
-            |Generate a single sentence for learning purposes with the word $word.
-            |No other response
-            """.trimMargin()
+        |Generate a single sentence for learning purposes with the word $word.
+        |No other response
+        """.trimMargin()
     )
 }
