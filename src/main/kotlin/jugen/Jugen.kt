@@ -1,13 +1,16 @@
 package me.avo.jugen
 
-import java.io.File
+import me.avo.jugen.audio.AudioFileWriter
+import me.avo.jugen.audio.AudioGenerator
+import me.avo.jugen.audio.InputReader
 
 class Jugen(
     val sentenceGenerator: SentenceGenerator,
-    val audioGenerator: AudioGenerator) {
+    val audioGenerator: AudioGenerator
+) {
     
     suspend fun generate() {
-        val word = getWord()
+        val word = InputReader().read()
         println("Generating for word: $word")
         val sentence = sentenceGenerator.generate(word)
         println(sentence)
@@ -15,11 +18,4 @@ class Jugen(
         AudioFileWriter().saveAudio(word, audioResult)
     }
 
-    private fun getWord(): String {
-        val file = File("input.txt")
-        if (file.exists()) {
-            return file.readText().trim()
-        }
-        throw IllegalStateException("input.txt not found")
-    }
 }

@@ -1,4 +1,4 @@
-package me.avo.jugen
+package me.avo.jugen.audio
 
 import com.microsoft.cognitiveservices.speech.SpeechSynthesisResult
 import java.io.File

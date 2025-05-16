@@ -3,10 +3,11 @@ package me.avo
 import com.apurebase.arkenv.Arkenv
 import com.apurebase.arkenv.feature.EnvironmentVariableFeature
 import com.apurebase.arkenv.util.parse
-import me.avo.jugen.AudioGenerator
+import me.avo.jugen.audio.AudioGenerator
 import me.avo.jugen.Jugen
 import me.avo.jugen.JugenConfig
 import me.avo.jugen.SentenceGenerator
+import me.avo.jugen.audio.InputReader
 import me.avo.model.AzureAiModel
 import me.avo.model.LargeLanguageModel
 import java.nio.charset.Charset
@@ -16,6 +17,9 @@ suspend fun main(args: Array<String>) {
     println(args.firstOrNull())
     val config = Arkenv.parse<JugenConfig>(args) { +EnvironmentVariableFeature(dotEnvFilePath = ".env") }
     
+//    textToSpeech(config)
+//    return
+
     if (config.generate) {
         generate(config)
         return
@@ -29,6 +33,11 @@ suspend fun main(args: Array<String>) {
             if (!status) break
         }
     }
+}
+
+private suspend fun textToSpeech(config: JugenConfig) {
+    val input = InputReader().read()
+    AudioGenerator(config.audioConfig).generate(input)
 }
 
 private suspend fun generate(config: JugenConfig) {

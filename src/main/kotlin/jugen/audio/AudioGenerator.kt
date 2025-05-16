@@ -1,4 +1,4 @@
-package me.avo.jugen
+package me.avo.jugen.audio
 
 import com.microsoft.cognitiveservices.speech.*
 
@@ -17,7 +17,7 @@ class AudioGenerator(
     private fun createSsml(input: String): String =
         """
         <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-            <voice name="${config.voiceName}">
+            <voice name="${config.voice.id}">
                 <mstts:express-as style="${config.style}" styledegree="${config.styleDegree}">
                     $input
                 </mstts:express-as>
@@ -38,7 +38,7 @@ class AudioGenerator(
 
     private fun getSynthesizer(config: AudioConfig): SpeechSynthesizer {
         val speechConfig = SpeechConfig.fromSubscription(config.subscriptionKey, config.region)
-        speechConfig.speechSynthesisVoiceName = config.voiceName
+        speechConfig.speechSynthesisVoiceName = config.voice.id
         return SpeechSynthesizer(speechConfig)
     }
 }
