@@ -13,7 +13,7 @@ import me.avo.messages.RequestBody
 import me.avo.messages.ResponseBody
 
 class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
-    private val url = "https://${config.host}.models.ai.azure.com/v1/chat/completions"
+    private val url = "https://${config.host}/v1/chat/completions"
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {

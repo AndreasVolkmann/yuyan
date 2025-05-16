@@ -1,6 +1,7 @@
 plugins {
-    kotlin("jvm") version "2.1.20"
-    kotlin("plugin.serialization") version "2.1.20"
+    val kotlinVersion = "2.1.21"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
     id("com.github.ben-manes.versions") version "0.52.0"
     application
 }
@@ -14,12 +15,13 @@ repositories {
 
 dependencies {
     val coroutinesVersion = "1.10.2"
-    val ktorVersion = "3.1.2"
+    val ktorVersion = "3.1.3"
     val arkenvVersion = "3.3.3"
 
     implementation("com.azure:azure-ai-openai:1.0.0-beta.16")
     implementation("com.microsoft.cognitiveservices.speech", "client-sdk", "1.43.0", null, null, "jar")
-
+    
+    implementation("org.slf4j:slf4j-simple:2.0.16")
     implementation("com.apurebase:arkenv:${arkenvVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:${coroutinesVersion}")

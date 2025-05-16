@@ -7,11 +7,19 @@ class Jugen(
     val audioGenerator: AudioGenerator) {
     
     suspend fun generate() {
-        val word = File("input.txt").readText().trim()
+        val word = getWord()
         println("Generating for word: $word")
         val sentence = sentenceGenerator.generate(word)
         println(sentence)
         val audioResult = audioGenerator.generate(sentence)
         AudioFileWriter().saveAudio(word, audioResult)
+    }
+
+    private fun getWord(): String {
+        val file = File("input.txt")
+        if (file.exists()) {
+            return file.readText().trim()
+        }
+        throw IllegalStateException("input.txt not found")
     }
 }
