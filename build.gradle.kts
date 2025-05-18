@@ -18,7 +18,6 @@ dependencies {
     val ktorVersion = "3.1.3"
     val arkenvVersion = "3.3.3"
 
-    implementation("com.azure:azure-ai-openai:1.0.0-beta.16")
     implementation("com.microsoft.cognitiveservices.speech", "client-sdk", "1.43.0", null, null, "jar")
     
     implementation("org.slf4j:slf4j-simple:2.0.16")
