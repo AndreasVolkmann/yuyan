@@ -1,8 +1,10 @@
 package me.avo.jugen.audio
 
 import com.microsoft.cognitiveservices.speech.*
+import me.avo.jugen.Language
 
 class AudioGenerator(
+    val language: Language,
     val config: AudioConfig
 ) {
     fun generate(input: String): SpeechSynthesisResult {
@@ -15,7 +17,7 @@ class AudioGenerator(
 
     //language=XML
     private fun createSsml(input: String): String = """
-        <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${config.language}">
+        <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${language.id}">
             <voice name="${config.voice.id}">
                 <mstts:express-as style="${config.style}" styledegree="${config.styleDegree}">
                     $input

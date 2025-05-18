@@ -5,7 +5,7 @@ import me.avo.messages.ChatMessage
 import me.avo.model.LargeLanguageModel
 import me.avo.model.ModelOptions
 
-class SentenceGenerator(val languageModel: LargeLanguageModel) {
+class SentenceGenerator(val languageModel: LargeLanguageModel, val config: JugenConfig) {
 
     suspend fun generate(word: String): String {
         val chat = Chat(
@@ -20,7 +20,7 @@ class SentenceGenerator(val languageModel: LargeLanguageModel) {
     private fun getMessage(word: String): ChatMessage = ChatMessage(
         "user",
         """
-        |Generate a single sentence for learning purposes with the word $word.
+        |Generate a single sentence in ${config.language.name} for learning purposes with the word $word.
         |No other response
         """.trimMargin()
     )

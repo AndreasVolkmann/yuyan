@@ -37,14 +37,14 @@ suspend fun main(args: Array<String>) {
 
 private suspend fun textToSpeech(config: JugenConfig) {
     val input = InputReader().read()
-    AudioGenerator(config.audioConfig).generate(input)
+    AudioGenerator(config.language, config.audioConfig).generate(input)
 }
 
 private suspend fun generate(config: JugenConfig) {
     val languageModel = AzureAiModel(config.modelConfig)
     val sentenceGenerator = Jugen(
-        SentenceGenerator(languageModel),
-        AudioGenerator(config.audioConfig)
+        SentenceGenerator(languageModel, config),
+        AudioGenerator(config.language, config.audioConfig)
     )
     sentenceGenerator.generate()
 }
