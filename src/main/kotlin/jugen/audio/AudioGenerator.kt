@@ -1,40 +1,26 @@
 package me.avo.jugen.audio
 
 import com.microsoft.cognitiveservices.speech.*
-import me.avo.jugen.Language
 
 class AudioGenerator(
-    val language: Language,
     val config: AudioConfig
 ) {
-    fun generate(input: String): SpeechSynthesisResult {
-        val ssml = createSsml(input)
+    fun generate(ssml: String): SpeechSynthesisResult {
         val synthesizer = getSynthesizer(config)
         val result = synthesizer.SpeakSsml(ssml)
-        handleResult(result)
+        handleResult(result, ssml)
         return result
     }
 
-    //language=XML
-    private fun createSsml(input: String): String = """
-        <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${language.id}">
-            <voice name="${config.voice.id}">
-                <mstts:express-as style="${config.style}" styledegree="${config.styleDegree}">
-                    $input
-                </mstts:express-as>
-            </voice>
-        </speak>
-        """.trimIndent()
-
-    private fun handleResult(result: SpeechSynthesisResult) = when (result.reason) {
+    private fun handleResult(result: SpeechSynthesisResult, ssml: String) = when (result.reason) {
         ResultReason.SynthesizingAudioCompleted -> {}
-        ResultReason.Canceled -> handleCancellation(result)
+        ResultReason.Canceled -> handleCancellation(result, ssml)
         else -> throw IllegalStateException("Unexpected value: ${result.reason}")
     }
 
-    private fun handleCancellation(result: SpeechSynthesisResult) {
+    private fun handleCancellation(result: SpeechSynthesisResult, ssml: String) {
         val cancellation = SpeechSynthesisCancellationDetails.fromResult(result)
-        throw IllegalStateException("Synthesis canceled: ${cancellation.errorCode}: ${cancellation.errorDetails}")
+        throw IllegalStateException("Synthesis canceled: ${cancellation.errorCode}: ${cancellation.errorDetails}: $ssml")
     }
 
     private fun getSynthesizer(config: AudioConfig): SpeechSynthesizer {

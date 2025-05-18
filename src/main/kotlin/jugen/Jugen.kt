@@ -3,19 +3,42 @@ package me.avo.jugen
 import me.avo.jugen.audio.AudioFileWriter
 import me.avo.jugen.audio.AudioGenerator
 import me.avo.jugen.audio.InputReader
+import me.avo.jugen.audio.SsmlBuilder
+import me.avo.jugen.dialog.DialogGenerator
+import me.avo.jugen.dialog.DialogParser
+import me.avo.model.LargeLanguageModel
 
 class Jugen(
-    val sentenceGenerator: SentenceGenerator,
-    val audioGenerator: AudioGenerator
+    config: JugenConfig,
+    model: LargeLanguageModel,
 ) {
-    
-    suspend fun generate() {
+    private val sentenceGenerator = SentenceGenerator(model, config)
+    private val audioGenerator = AudioGenerator(config.audioConfig)
+    private val dialogGenerator = DialogGenerator(config, model)
+    private val ssmlBuilder = SsmlBuilder(config.language, config.audioConfig)
+
+    suspend fun generateSentence() {
         val word = InputReader().read()
         println("Generating for word: $word")
         val sentence = sentenceGenerator.generate(word)
         println(sentence)
-        val audioResult = audioGenerator.generate(sentence)
+        val ssml = ssmlBuilder.createSsml(sentence)
+        val audioResult = audioGenerator.generate(ssml)
         AudioFileWriter().saveAudio(word, audioResult)
     }
 
+    suspend fun generateDialog(words: List<String>) {
+        println("Generating dialog for words: $words")
+        val result = dialogGenerator.generate(words)
+        println(result)
+        val dialog = DialogParser().parse(words, result)
+
+        
+        dialog.lines.forEach { println(it) }
+
+
+        val ssml = ssmlBuilder.createDialogSsml(dialog)
+        val audioResult = audioGenerator.generate(ssml)
+        AudioFileWriter().saveAudio("dialog", audioResult)
+    }
 }
