@@ -17,14 +17,19 @@ class Jugen(
     private val dialogGenerator = DialogGenerator(config, model)
     private val ssmlBuilder = SsmlBuilder(config.language, config.audioConfig)
 
-    suspend fun generateSentence() {
+    suspend fun generateSentence(): String {
         val word = InputReader().read()
-        println("Generating for word: $word")
-        val sentence = sentenceGenerator.generate(word)
+        return generateSentence(word)
+    }
+
+    suspend fun generateSentence(input: String): String {
+        println("Generating for: $input")
+        val sentence = sentenceGenerator.generate(input)
         println(sentence)
         val ssml = ssmlBuilder.createSsml(sentence)
         val audioResult = audioGenerator.generate(ssml)
-        AudioFileWriter().saveAudio(word, audioResult)
+        AudioFileWriter().saveAudio(input, audioResult)
+        return sentence
     }
 
     suspend fun generateDialog(words: List<String>) {

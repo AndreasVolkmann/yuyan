@@ -1,6 +1,8 @@
 package me.avo
 
-import me.avo.anki.Anki
+import me.avo.anki.service.AnkiRequestFactory
+import me.avo.anki.service.AnkiService
+import me.avo.anki.service.AnkiViaHttpClient
 import me.avo.jugen.Jugen
 import me.avo.jugen.JugenConfig
 import me.avo.jugen.audio.AudioGenerator
@@ -16,12 +18,31 @@ class CommandHandler(private val config: JugenConfig) {
     private val jugen = Jugen(config, model)
 
     suspend fun anki() {
-        val words = Anki(config.ankiConfig)
-            .findDifficultCards()
-            .mapNotNull { it.fields["Simplified"]?.value }
-//            .take(10)
-        
-        jugen.generateDialog(words)
+        val ankiService = AnkiService(
+            config.ankiConfig, AnkiViaHttpClient(config.ankiConfig), AnkiRequestFactory())
+
+        ankiService
+            .findCardsWithoutSampleSentence()
+            .take(1)
+            .onEach(::println)
+            .forEach {
+                val targetTerm = it.fields[config.ankiConfig.targetFieldName]?.value
+                if (targetTerm != null) {
+                    val sentence = jugen.generateSentence(targetTerm)
+                    val noteIds = ankiService.findCardNoteIds(it)
+                    val noteId = noteIds.firstOrNull()
+                    if (noteId != null) {
+                        ankiService.updateCardSampleSentence(noteId, sentence)
+                    }
+                }
+            }
+            
+//        val words = ankiService
+//            .findDifficultCards()
+//            .mapNotNull { it.fields["Simplified"]?.value }
+////            .take(10)
+//        
+//        jugen.generateDialog(words)
     }
 
     fun textToSpeech() {
