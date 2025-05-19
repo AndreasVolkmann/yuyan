@@ -22,12 +22,21 @@ class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
     }
 
     override suspend fun execute(chat: Chat): String {
-        val modelOptions = chat.modelOptions
-        val response: ResponseBody = client.post(url) {
+        val response = client.post(url) {
             header(HttpHeaders.Authorization, "Bearer ${config.apiKey}")
             contentType(ContentType.Application.Json)
-            setBody(RequestBody(chat.messages, modelOptions.maxTokens, modelOptions.temperature.toFloat(), modelOptions.topP.toFloat()))
-        }.body()
+            setBody(constructRequestBody(chat))
+        }.body<ResponseBody>()
         return response.choices.joinToString { it.message.content }
+    }
+
+    private fun constructRequestBody(chat: Chat): RequestBody {
+        val modelOptions = chat.modelOptions
+        return RequestBody(
+            chat.messages,
+            modelOptions.maxTokens,
+            modelOptions.temperature.toFloat(),
+            modelOptions.topP.toFloat()
+        )
     }
 }

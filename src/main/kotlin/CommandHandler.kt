@@ -21,28 +21,30 @@ class CommandHandler(private val config: JugenConfig) {
         val ankiService = AnkiService(
             config.ankiConfig, AnkiViaHttpClient(config.ankiConfig), AnkiRequestFactory())
 
-        ankiService
-            .findCardsWithoutSampleSentence()
-            .take(1)
-            .onEach(::println)
-            .forEach {
-                val targetTerm = it.fields[config.ankiConfig.targetFieldName]?.value
-                if (targetTerm != null) {
-                    val sentence = jugen.generateSentence(targetTerm)
-                    val noteIds = ankiService.findCardNoteIds(it)
-                    val noteId = noteIds.firstOrNull()
-                    if (noteId != null) {
-                        ankiService.updateCardSampleSentence(noteId, sentence)
-                    }
-                }
-            }
+//        ankiService
+//            .findCardsWithoutSampleSentence()
+//            .take(1)
+//            .onEach(::println)
+//            .forEach {
+//                val targetTerm = it.fields[config.ankiConfig.targetFieldName]?.value
+//                if (targetTerm != null) {
+//                    val sentence = jugen.generateSentence(targetTerm)
+//                    val noteIds = ankiService.findCardNoteIds(it)
+//                    val noteId = noteIds.firstOrNull()
+//                    if (noteId != null) {
+//                        ankiService.updateCardSampleSentence(noteId, sentence)
+//                    }
+//                }
+//            }
             
-//        val words = ankiService
-//            .findDifficultCards()
-//            .mapNotNull { it.fields["Simplified"]?.value }
-////            .take(10)
-//        
-//        jugen.generateDialog(words)
+        val words = ankiService
+            .findDifficultCards()
+            .mapNotNull { it.fields["Simplified"]?.value }
+            .take(10)
+
+        val dialog = jugen.generateDialog(words)
+        
+        jugen.generateComprehension(dialog)
     }
 
     fun textToSpeech() {
