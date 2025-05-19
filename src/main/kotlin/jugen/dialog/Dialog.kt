@@ -8,4 +8,6 @@ data class Dialog(
 data class DialogLine(
     val speaker: String,
     val text: String,
-)
+) {
+    override fun toString() = "$speaker: $text"
+}

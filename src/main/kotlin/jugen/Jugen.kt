@@ -31,10 +31,11 @@ class Jugen(
         println("Generating dialog for words: $words")
         val result = dialogGenerator.generate(words)
         println(result)
+        println()
         val dialog = DialogParser().parse(words, result)
 
         
-        dialog.lines.forEach { println(it) }
+        dialog.lines.forEach(::println)
 
 
         val ssml = ssmlBuilder.createDialogSsml(dialog)

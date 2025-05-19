@@ -19,7 +19,7 @@ class CommandHandler(private val config: JugenConfig) {
         val words = Anki(config.ankiConfig)
             .findDifficultCards()
             .mapNotNull { it.fields["Simplified"]?.value }
-            .take(5)
+//            .take(10)
         
         jugen.generateDialog(words)
     }
