@@ -3,6 +3,7 @@ package me.avo
 import me.avo.anki.service.AnkiRequestFactory
 import me.avo.anki.service.AnkiService
 import me.avo.anki.service.AnkiViaHttpClient
+import me.avo.jugen.BackfillCardsWithoutSampleSentenceCommand
 import me.avo.jugen.Jugen
 import me.avo.jugen.JugenConfig
 import me.avo.jugen.audio.AudioGenerator
@@ -19,24 +20,8 @@ class CommandHandler(private val config: JugenConfig) {
     val ankiService = AnkiService(
         config.ankiConfig, AnkiViaHttpClient(config.ankiConfig), AnkiRequestFactory())
 
-    suspend fun anki() = ankiService
-        .findCardsWithoutSampleSentence()
-        .also { println("Cars without sample sentence: ${it.size}") }
-        .take(10)
-        .onEach(::println)
-        .forEach {
-            val targetTerm = it.fields[config.ankiConfig.targetFieldName]?.value
-            if (targetTerm != null) {
-                val (sentence, audioFile) = jugen.generateSentence(targetTerm)
-                val noteIds = ankiService.findCardNoteIds(it)
-                val noteId = noteIds.firstOrNull()
-                if (noteId != null) {
-                    ankiService.updateCardSampleSentence(noteId, sentence)
-                    ankiService.updateCardAudio(noteId, audioFile.absolutePath, "SentenceAudio")
-                }
-            }
-        }
-
+    suspend fun anki() = BackfillCardsWithoutSampleSentenceCommand(ankiService, jugen, config.ankiConfig).anki()
+    
     suspend fun generateComprehensionForDifficultWords() {
         val words = ankiService
             .findDifficultCards()
