@@ -28,7 +28,7 @@ class Chat(
             "temp", "temperature" -> modelOptions.temperature = value.toDouble()
             "topP" -> modelOptions.topP = value.toDouble()
             "maxTokens" -> modelOptions.maxTokens = value.toInt()
-            "me/avo/llm/model" -> modelOptions.model = value
+            "model" -> modelOptions.model = value
             else -> println("Unknown property: $command")
         }
         println(modelOptions)

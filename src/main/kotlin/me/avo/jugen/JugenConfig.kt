@@ -14,6 +14,10 @@ class JugenConfig(
         mapping = { Language.valueOf(it) }
         description = "Language to generate sentences in"
     }
+    
+    val theme: String? by argument("-t", "--theme") {
+        description = "Theme to generate about"
+    }
 
     val modelConfig: ModelConfig by module<ModelConfig> { prefix = "model" }
     val imageModelConfig: ModelConfig by module<ModelConfig> { prefix = "imageModel" }
