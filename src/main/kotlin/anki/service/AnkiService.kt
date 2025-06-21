@@ -2,6 +2,7 @@ package me.avo.anki.service
 
 import me.avo.anki.AnkiCard
 import me.avo.anki.AnkiConfig
+import me.avo.anki.util.UnicodeEscapeUtils
 
 class AnkiService(
     private val config: AnkiConfig,
@@ -18,11 +19,9 @@ class AnkiService(
     }
 
     suspend fun updateCardAudio(noteId: Long, audioFilePath: String, fieldName: String, fileName: String? = null) {
-        // First store the media file in Anki's media collection
         val storedFileName = client.execute(factory.storeMediaFile(audioFilePath, fileName))
-
-        // Then update the note field to reference the audio file
-        val audioTag = "[sound:$storedFileName]"
+        val soundName = UnicodeEscapeUtils.unescapeUnicode(storedFileName.trim('"'))
+        val audioTag = "[sound:$soundName]"
         val request = factory.updateNoteFields(noteId, fieldName, audioTag)
         client.execute(request)
     }
