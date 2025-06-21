@@ -19,7 +19,8 @@ dependencies {
     val arkenvVersion = "3.3.3"
 
     implementation("com.microsoft.cognitiveservices.speech", "client-sdk", "1.43.0", null, null, "jar")
-    
+
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.21")
     implementation("org.slf4j:slf4j-simple:2.0.16")
     implementation("com.apurebase:arkenv:${arkenvVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
@@ -31,6 +32,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     
     testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+    testImplementation("io.mockk:mockk:1.13.10")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}")
 }
 
 application {
