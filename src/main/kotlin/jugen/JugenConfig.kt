@@ -16,6 +16,7 @@ class JugenConfig(
     }
 
     val modelConfig: ModelConfig by module<ModelConfig> { prefix = "model" }
+    val imageModelConfig: ModelConfig by module<ModelConfig> { prefix = "imageModel" }
     val audioConfig: AudioConfig by module<AudioConfig> { prefix = "audio" }
     val ankiConfig: AnkiConfig by module<AnkiConfig> { prefix = "anki" }
 }
