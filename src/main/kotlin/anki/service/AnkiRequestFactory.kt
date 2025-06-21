@@ -1,6 +1,7 @@
 package me.avo.anki.service
 
 import me.avo.anki.AnkiCard
+import java.io.File
 
 class AnkiRequestFactory {
 
@@ -41,4 +42,12 @@ class AnkiRequestFactory {
             )
         )
     )
+
+    fun storeMediaFile(filePath: String, fileName: String? = null) = AnkiRequest(
+        action = "storeMediaFile",
+        params = AnkiParams(
+            path = filePath,
+            filename = fileName ?: File(filePath).name
+        )
+    ).withResponseType<String>()
 }

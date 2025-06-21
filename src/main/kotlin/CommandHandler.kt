@@ -16,34 +16,35 @@ import java.nio.charset.MalformedInputException
 class CommandHandler(private val config: JugenConfig) {
     private val model: LargeLanguageModel = AzureAiModel(config.modelConfig)
     private val jugen = Jugen(config, model)
+    val ankiService = AnkiService(
+        config.ankiConfig, AnkiViaHttpClient(config.ankiConfig), AnkiRequestFactory())
 
-    suspend fun anki() {
-        val ankiService = AnkiService(
-            config.ankiConfig, AnkiViaHttpClient(config.ankiConfig), AnkiRequestFactory())
+    suspend fun anki() = ankiService
+        .findCardsWithoutSampleSentence()
+        .also { println("Cars without sample sentence: ${it.size}") }
+        .take(10)
+        .onEach(::println)
+        .forEach {
+            val targetTerm = it.fields[config.ankiConfig.targetFieldName]?.value
+            if (targetTerm != null) {
+                val (sentence, audioFile) = jugen.generateSentence(targetTerm)
+                val noteIds = ankiService.findCardNoteIds(it)
+                val noteId = noteIds.firstOrNull()
+                if (noteId != null) {
+                    ankiService.updateCardSampleSentence(noteId, sentence)
+                    ankiService.updateCardAudio(noteId, audioFile.absolutePath, "SentenceAudio")
+                }
+            }
+        }
 
-//        ankiService
-//            .findCardsWithoutSampleSentence()
-//            .take(1)
-//            .onEach(::println)
-//            .forEach {
-//                val targetTerm = it.fields[config.ankiConfig.targetFieldName]?.value
-//                if (targetTerm != null) {
-//                    val sentence = jugen.generateSentence(targetTerm)
-//                    val noteIds = ankiService.findCardNoteIds(it)
-//                    val noteId = noteIds.firstOrNull()
-//                    if (noteId != null) {
-//                        ankiService.updateCardSampleSentence(noteId, sentence)
-//                    }
-//                }
-//            }
-            
+    suspend fun generateComprehensionForDifficultWords() {
         val words = ankiService
             .findDifficultCards()
             .mapNotNull { it.fields["Simplified"]?.value }
             .take(10)
 
         val dialog = jugen.generateDialog(words)
-        
+
         jugen.generateComprehension(dialog)
     }
 

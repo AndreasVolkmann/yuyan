@@ -16,6 +16,16 @@ class AnkiService(
         val request = factory.updateNoteFields(noteId, config.sampleSentenceFieldName, sampleSentence)
         client.execute(request)
     }
+
+    suspend fun updateCardAudio(noteId: Long, audioFilePath: String, fieldName: String, fileName: String? = null) {
+        // First store the media file in Anki's media collection
+        val storedFileName = client.execute(factory.storeMediaFile(audioFilePath, fileName))
+
+        // Then update the note field to reference the audio file
+        val audioTag = "[sound:$storedFileName]"
+        val request = factory.updateNoteFields(noteId, fieldName, audioTag)
+        client.execute(request)
+    }
     
     suspend fun findCardNoteIds(card: AnkiCard): List<Long> {
         val request = factory.cardsToNotes(card.cardId)

@@ -22,17 +22,17 @@ class Jugen(
 
     suspend fun generateSentence(): String {
         val word = InputReader().read()
-        return generateSentence(word)
+        return generateSentence(word).sentence
     }
 
-    suspend fun generateSentence(input: String): String {
+    suspend fun generateSentence(input: String): JugenResult {
         println("Generating for: $input")
         val sentence = sentenceGenerator.generate(input)
         println(sentence)
         val ssml = ssmlBuilder.createSsml(sentence)
         val audioResult = audioGenerator.generate(ssml)
-        AudioFileWriter().saveAudio(input, audioResult)
-        return sentence
+        val audioFile = AudioFileWriter().saveAudio(input, audioResult)
+        return JugenResult(sentence, audioFile)
     }
 
     suspend fun generateDialog(words: List<String>): Dialog {

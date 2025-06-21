@@ -34,6 +34,8 @@ data class AnkiParams(
     val card: Long? = null,
     val keys: List<String>? = null,
     val newValues: List<String>? = null,
+    val path: String? = null,
+    val filename: String? = null,
 )
 
 
