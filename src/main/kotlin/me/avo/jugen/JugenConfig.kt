@@ -15,8 +15,8 @@ class JugenConfig(
         description = "Language to generate sentences in"
     }
 
-    val modelConfig: ModelConfig by module<ModelConfig> { prefix = "me/avo/llm/model" }
+    val modelConfig: ModelConfig by module<ModelConfig> { prefix = "model" }
     val imageModelConfig: ModelConfig by module<ModelConfig> { prefix = "imageModel" }
     val audioConfig: AudioConfig by module<AudioConfig> { prefix = "audio" }
-    val ankiConfig: AnkiConfig by module<AnkiConfig> { prefix = "me/avo/anki" }
+    val ankiConfig: AnkiConfig by module<AnkiConfig> { prefix = "anki" }
 }
