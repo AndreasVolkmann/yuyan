@@ -3,8 +3,10 @@ package me.avo.model
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
@@ -19,6 +21,16 @@ class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
         install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true })
         }
+        install(HttpRequestRetry) {
+            retryIf { _, response -> 
+                response.status == HttpStatusCode.TooManyRequests 
+            }
+            exponentialDelay(base = 5.0, maxDelayMs = 30000)
+            modifyRequest { request ->
+                println("Retrying request: ${request.url}")
+                request.headers.append("X-Retry-Count", retryCount.toString())
+            }
+        }
     }
 
     override suspend fun execute(chat: Chat): String {
@@ -26,8 +38,16 @@ class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
             header(HttpHeaders.Authorization, "Bearer ${config.apiKey}")
             contentType(ContentType.Application.Json)
             setBody(constructRequestBody(chat))
-        }.body<ResponseBody>()
-        return response.choices.joinToString { it.message.content }
+        }
+        println(response)
+        
+        if (response.status.isSuccess()) {
+            val responseBody: ResponseBody = response.body()
+            return responseBody.choices.joinToString { it.message.content }
+        }
+        else {
+            throw Exception("Failed to get response: ${response.status.value} - ${response.status.description}, ${response.bodyAsText()}")
+        }
     }
 
     private fun constructRequestBody(chat: Chat): RequestBody {
