@@ -1,7 +1,7 @@
 package me.avo.jugen.image
 
-import me.avo.model.image.ImageModel
-import me.avo.model.image.ImageOptions
+import me.avo.llm.model.image.ImageModel
+import me.avo.llm.model.image.ImageOptions
 
 class ImageGenerator(
     private val imageModel: ImageModel,

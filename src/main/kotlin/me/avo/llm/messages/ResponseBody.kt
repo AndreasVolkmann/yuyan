@@ -1,4 +1,4 @@
-package me.avo.messages
+package me.avo.llm.messages
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

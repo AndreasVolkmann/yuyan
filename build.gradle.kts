@@ -15,10 +15,11 @@ repositories {
 
 dependencies {
     val coroutinesVersion = "1.10.2"
-    val ktorVersion = "3.1.3"
+    val ktorVersion = "3.2.0"
     val arkenvVersion = "3.3.3"
+    val junitJupterVersion = "5.13.1"
 
-    implementation("com.microsoft.cognitiveservices.speech", "client-sdk", "1.43.0", null, null, "jar")
+    implementation("com.microsoft.cognitiveservices.speech", "client-sdk", "1.44.0", null, null, "jar")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.21")
     implementation("org.slf4j:slf4j-simple:2.0.16")
@@ -32,9 +33,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     
     testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
-    testImplementation("io.mockk:mockk:1.13.10")
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitJupterVersion)
+    testImplementation("org.junit.jupiter", "junit-jupiter-engine", junitJupterVersion)
+    testImplementation("io.mockk:mockk:1.14.3")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesVersion}")
 }
 
@@ -65,7 +66,7 @@ tasks {
         }
     }
     build {
-        dependsOn(fatJar) // Trigger fat jar creation during build
+        dependsOn(fatJar) // Trigger fat jar creation during the build
     }
 }
 

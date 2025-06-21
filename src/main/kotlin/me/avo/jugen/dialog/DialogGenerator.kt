@@ -2,9 +2,9 @@ package me.avo.jugen.dialog
 
 import me.avo.Chat
 import me.avo.jugen.JugenConfig
-import me.avo.messages.ChatMessage
-import me.avo.model.LargeLanguageModel
-import me.avo.model.ModelOptions
+import me.avo.llm.messages.ChatMessage
+import me.avo.llm.model.LargeLanguageModel
+import me.avo.llm.model.ModelOptions
 
 class DialogGenerator(
     private val config: JugenConfig,

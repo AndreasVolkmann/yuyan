@@ -1,4 +1,4 @@
-package me.avo.model.image
+package me.avo.llm.model.image
 
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -11,7 +11,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import me.avo.model.ModelConfig
+import me.avo.llm.model.ModelConfig
 
 class AzureAiImageModel(
     val config: ModelConfig

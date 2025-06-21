@@ -1,4 +1,4 @@
-package me.avo.messages
+package me.avo.llm.messages
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Choice(
     val index: Int,
     val message: ChatMessage,
-    
+
     @SerialName("finish_reason")
     val finishReason: String) {
 }

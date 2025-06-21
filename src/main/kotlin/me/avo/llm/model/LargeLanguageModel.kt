@@ -1,4 +1,4 @@
-package me.avo.model
+package me.avo.llm.model
 
 import me.avo.Chat
 

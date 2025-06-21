@@ -4,7 +4,7 @@ import com.apurebase.arkenv.module.module
 import com.apurebase.arkenv.util.argument
 import me.avo.anki.AnkiConfig
 import me.avo.jugen.audio.AudioConfig
-import me.avo.model.ModelConfig
+import me.avo.llm.model.ModelConfig
 
 class JugenConfig(
     val generate: Boolean = true
@@ -15,8 +15,8 @@ class JugenConfig(
         description = "Language to generate sentences in"
     }
 
-    val modelConfig: ModelConfig by module<ModelConfig> { prefix = "model" }
+    val modelConfig: ModelConfig by module<ModelConfig> { prefix = "me/avo/llm/model" }
     val imageModelConfig: ModelConfig by module<ModelConfig> { prefix = "imageModel" }
     val audioConfig: AudioConfig by module<AudioConfig> { prefix = "audio" }
-    val ankiConfig: AnkiConfig by module<AnkiConfig> { prefix = "anki" }
+    val ankiConfig: AnkiConfig by module<AnkiConfig> { prefix = "me/avo/anki" }
 }

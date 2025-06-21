@@ -1,9 +1,9 @@
 package me.avo.jugen
 
 import me.avo.Chat
-import me.avo.messages.ChatMessage
-import me.avo.model.LargeLanguageModel
-import me.avo.model.ModelOptions
+import me.avo.llm.messages.ChatMessage
+import me.avo.llm.model.LargeLanguageModel
+import me.avo.llm.model.ModelOptions
 
 class SentenceGenerator(val languageModel: LargeLanguageModel, val config: JugenConfig) {
 

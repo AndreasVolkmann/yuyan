@@ -1,15 +1,19 @@
-package me.avo.jugen
+package me.avo.jugen.commands
 
 import me.avo.anki.AnkiCard
 import me.avo.anki.AnkiConfig
 import me.avo.anki.service.AnkiService
+import me.avo.jugen.Jugen
 
 class BackfillCardsWithoutSampleSentenceCommand(
     private val ankiService: AnkiService,
     private val jugen: Jugen,
     private val ankiConfig: AnkiConfig
-) {
-    suspend fun anki() = ankiService
+) : JugenCommand {
+    
+    override val id = "backfill"
+
+    override suspend fun execute() = ankiService
         .findCardsWithoutSampleSentence()
         .also { println("Cars without sample sentence: ${it.size}") }
         .take(10)

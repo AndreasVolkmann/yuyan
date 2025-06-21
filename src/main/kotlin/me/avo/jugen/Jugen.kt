@@ -8,7 +8,7 @@ import me.avo.jugen.dialog.ComprehensionGenerator
 import me.avo.jugen.dialog.Dialog
 import me.avo.jugen.dialog.DialogGenerator
 import me.avo.jugen.dialog.DialogParser
-import me.avo.model.LargeLanguageModel
+import me.avo.llm.model.LargeLanguageModel
 
 class Jugen(
     config: JugenConfig,

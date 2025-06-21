@@ -6,28 +6,10 @@ import com.apurebase.arkenv.util.parse
 import me.avo.jugen.JugenConfig
 
 suspend fun main(args: Array<String>) {
-    println(args.firstOrNull())
+    println("Arguments: ${args.joinToString(", ")}")
+    val command = args.firstOrNull() ?: throw IllegalArgumentException("No command provided. Please specify a command to execute.")
     val config = Arkenv.parse<JugenConfig>(args) { +EnvironmentVariableFeature(dotEnvFilePath = ".env") }
     val handler = CommandHandler(config)
-
-//    textToSpeech(config)
-//    return
-
-
-    handler.anki()
-
-    return
-
-    if (config.generate) {
-        handler.generate()
-        return
-    } else {
-        val chat = Chat()
-
-        while (true) {
-            val status = handler.cycle(chat)
-            if (!status) break
-        }
-    }
+    handler.execute(command)
 }
 

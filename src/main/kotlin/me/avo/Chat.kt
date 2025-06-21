@@ -1,7 +1,7 @@
 package me.avo
 
-import me.avo.messages.ChatMessage
-import me.avo.model.ModelOptions
+import me.avo.llm.messages.ChatMessage
+import me.avo.llm.model.ModelOptions
 
 class Chat(
     val messages: MutableList<ChatMessage> = mutableListOf(),
@@ -28,7 +28,7 @@ class Chat(
             "temp", "temperature" -> modelOptions.temperature = value.toDouble()
             "topP" -> modelOptions.topP = value.toDouble()
             "maxTokens" -> modelOptions.maxTokens = value.toInt()
-            "model" -> modelOptions.model = value
+            "me/avo/llm/model" -> modelOptions.model = value
             else -> println("Unknown property: $command")
         }
         println(modelOptions)

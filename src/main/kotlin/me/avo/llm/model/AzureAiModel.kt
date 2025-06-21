@@ -1,4 +1,4 @@
-package me.avo.model
+package me.avo.llm.model
 
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -11,8 +11,8 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import me.avo.Chat
-import me.avo.messages.RequestBody
-import me.avo.messages.ResponseBody
+import me.avo.llm.messages.RequestBody
+import me.avo.llm.messages.ResponseBody
 
 class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
     private val url = "https://${config.host}/v1/chat/completions"
