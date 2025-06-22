@@ -40,20 +40,20 @@ enum class Voice(val id: String) {
     XiaochenDragonHDLatest("zh-CN-Xiaochen:DragonHDLatestNeural"),
     YunfanDragonHDLatest("zh-CN-Yunfan:DragonHDLatestNeural");
     
-    val language: Language get() = when {
-        id.startsWith("zh-CN") -> Language.Chinese
-        id.startsWith("en-US") -> Language.English
-        id.startsWith("ja-JP") -> Language.Japanese
-        id.startsWith("ko-KR") -> Language.Korean
-        id.startsWith("es-ES") -> Language.Spanish
-        id.startsWith("fr-FR") -> Language.French
-        id.startsWith("de-DE") -> Language.German
-        id.startsWith("it-IT") -> Language.Italian
-        id.startsWith("pt-PT") -> Language.Portuguese
-        id.startsWith("ru-RU") -> Language.Russian
-        id.startsWith("ar-SA") -> Language.Arabic
-        id.startsWith("hi-IN") -> Language.Hindi
-        else -> Language.Chinese // default fallback
+    val language: Language get() = when (id.take(5)) {
+        "zh-CN" -> Language.Chinese
+        "en-US" -> Language.English
+        "ja-JP" -> Language.Japanese
+        "ko-KR" -> Language.Korean
+        "es-ES" -> Language.Spanish
+        "fr-FR" -> Language.French
+        "de-DE" -> Language.German
+        "it-IT" -> Language.Italian
+        "pt-PT" -> Language.Portuguese
+        "ru-RU" -> Language.Russian
+        "ar-SA" -> Language.Arabic
+        "hi-IN" -> Language.Hindi
+        else -> throw IllegalArgumentException("Unsupported language prefix: ${id.take(5)}")
     }
     
     companion object {

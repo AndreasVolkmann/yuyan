@@ -34,10 +34,11 @@ class VoiceTest {
     
     @Test
     fun `random voice with language should return voice of specified language`() {
+        val targetLanguage = Language.Chinese
         // Test multiple times to ensure all returned voices are Chinese
         repeat(10) {
-            val randomVoice = Voice.random(Language.Chinese)
-            assertEquals(Language.Chinese, randomVoice.language, "Random voice should match specified language")
+            val randomVoice = Voice.random(targetLanguage)
+            assertEquals(targetLanguage, randomVoice.language, "Random voice should match specified language")
         }
     }
 }
