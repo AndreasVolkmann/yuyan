@@ -40,4 +40,14 @@ class SsmlBuilderTest {
             "Dialog SSML should contain voices from available voices"
         )
     }
+    
+    @Test
+    fun `createSsml should use voice matching specified language`() {
+        val config = AudioConfig("test-key", "test-region")
+        val ssmlBuilder = SsmlBuilder(Language.Chinese, config)
+        
+        val ssml = ssmlBuilder.createSsml("Hello World")
+        
+        assertTrue(ssml.voice.language == Language.Chinese, "Voice should match the specified language")
+    }
 }
