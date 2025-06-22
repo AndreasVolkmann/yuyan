@@ -38,7 +38,19 @@ enum class Voice(val id: String) {
     YunxiaoMultilingual("zh-CN-YunxiaoMultilingualNeural"),
     YunyiDragonHDFlashLatest("zh-CN-Yunyi:DragonHDFlashLatestNeural"),
     XiaochenDragonHDLatest("zh-CN-Xiaochen:DragonHDLatestNeural"),
-    YunfanDragonHDLatest("zh-CN-Yunfan:DragonHDLatestNeural");
+    YunfanDragonHDLatest("zh-CN-Yunfan:DragonHDLatestNeural"),
+    
+    // Japanese voices
+    Nanami("ja-JP-NanamiNeural"),
+    Keita("ja-JP-KeitaNeural"),
+    Aoi("ja-JP-AoiNeural"),
+    Daichi("ja-JP-DaichiNeural"),
+    Mayu("ja-JP-MayuNeural"),
+    Naoki("ja-JP-NaokiNeural"),
+    Shiori("ja-JP-ShioriNeural"),
+    MasaruMultilingual("ja-JP-MasaruMultilingualNeural"),
+    MasaruDragonHDLatest("ja-JP-Masaru:DragonHDLatestNeural"),
+    NanamiDragonHDLatest("ja-JP-Nanami:DragonHDLatestNeural");
     
     val language: Language get() = when (id.take(5)) {
         "zh-CN" -> Language.Chinese
