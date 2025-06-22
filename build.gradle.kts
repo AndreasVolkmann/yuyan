@@ -1,5 +1,5 @@
 plugins {
-    val kotlinVersion = "2.1.21"
+    val kotlinVersion = "2.0.21"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
     id("com.github.ben-manes.versions") version "0.52.0"
@@ -21,7 +21,7 @@ dependencies {
 
     implementation("com.microsoft.cognitiveservices.speech", "client-sdk", "1.44.0", null, null, "jar")
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.21")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.21")
     implementation("org.slf4j:slf4j-simple:2.0.16")
     implementation("com.apurebase:arkenv:${arkenvVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
