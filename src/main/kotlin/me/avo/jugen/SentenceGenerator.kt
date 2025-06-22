@@ -14,7 +14,7 @@ class SentenceGenerator(val languageModel: LargeLanguageModel, val config: Jugen
         )
 
         val result = languageModel.execute(chat)
-        return result.trim('“', '”')
+        return result.trim('“', '”', '"')
     }
 
     private fun getMessage(word: String): ChatMessage = ChatMessage(
