@@ -3,6 +3,7 @@ package me.avo.jugen.audio
 import me.avo.jugen.Language
 import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 class VoiceTest {
 
@@ -36,7 +37,7 @@ class VoiceTest {
         // Test multiple times to ensure all returned voices are Chinese
         repeat(10) {
             val randomVoice = Voice.random(Language.Chinese)
-            assertTrue(randomVoice.language == Language.Chinese, "Random voice should match specified language")
+            assertEquals(Language.Chinese, randomVoice.language, "Random voice should match specified language")
         }
     }
 }
