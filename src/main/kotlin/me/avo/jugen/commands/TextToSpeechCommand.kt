@@ -14,6 +14,6 @@ class TextToSpeechCommand(
     override suspend fun execute() {
         val input = InputReader().read()
         val ssml = SsmlBuilder(config.language, config.audioConfig).createSsml(input)
-        AudioGenerator(config.audioConfig).generate(ssml)
+        AudioGenerator(config.audioConfig).generate(ssml.content)
     }
 }

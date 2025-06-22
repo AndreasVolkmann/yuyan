@@ -7,6 +7,6 @@ enum class Voice(val id: String) {
     Yunjian("zh-CN-YunjianNeural");
     
     companion object {
-        fun random(): Voice = values().random()
+        fun random() = entries.random()
     }
 }
