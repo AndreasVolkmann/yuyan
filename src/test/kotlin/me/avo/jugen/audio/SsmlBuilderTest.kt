@@ -5,6 +5,7 @@ import me.avo.jugen.dialog.Dialog
 import me.avo.jugen.dialog.DialogLine
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class SsmlBuilderTest {
@@ -39,5 +40,16 @@ class SsmlBuilderTest {
             availableVoiceIds.any { voiceId -> ssml.contains(voiceId) },
             "Dialog SSML should contain voices from available voices"
         )
+    }
+    
+    @Test
+    fun `createSsml should use voice matching specified language`() {
+        val language = Language.Chinese
+        val config = AudioConfig("test-key", "test-region")
+        val ssmlBuilder = SsmlBuilder(language, config)
+        
+        val ssml = ssmlBuilder.createSsml("Hello World")
+        
+        assertEquals(language, ssml.voice.language, "Voice should match the specified language")
     }
 }

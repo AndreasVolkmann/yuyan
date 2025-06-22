@@ -8,7 +8,7 @@ class SsmlBuilder(
     val config: AudioConfig
 ) {
     fun createSsml(input: String): Ssml {
-        val voice = Voice.random()
+        val voice = Voice.random(language)
         val ssmlContent = createSsmlFromLines(
             createSsmlForLine(input, voice)
         )
@@ -17,7 +17,7 @@ class SsmlBuilder(
 
     fun createDialogSsml(dialog: Dialog): String {
         val voiceTags = dialog.lines.joinToString("\n") { l ->
-            createSsmlForLine(l.text, Voice.random())
+            createSsmlForLine(l.text, Voice.random(language))
         }
 
         return createSsmlFromLines(voiceTags)

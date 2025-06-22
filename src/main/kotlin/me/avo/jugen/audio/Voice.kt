@@ -1,5 +1,7 @@
 package me.avo.jugen.audio
 
+import me.avo.jugen.Language
+
 enum class Voice(val id: String) {
     Xiaochen("zh-CN-XiaochenNeural"), // best so far
     Xiaoxiao("zh-CN-XiaoxiaoNeural"),
@@ -38,7 +40,24 @@ enum class Voice(val id: String) {
     XiaochenDragonHDLatest("zh-CN-Xiaochen:DragonHDLatestNeural"),
     YunfanDragonHDLatest("zh-CN-Yunfan:DragonHDLatestNeural");
     
+    val language: Language get() = when (id.take(5)) {
+        "zh-CN" -> Language.Chinese
+        "en-US" -> Language.English
+        "ja-JP" -> Language.Japanese
+        "ko-KR" -> Language.Korean
+        "es-ES" -> Language.Spanish
+        "fr-FR" -> Language.French
+        "de-DE" -> Language.German
+        "it-IT" -> Language.Italian
+        "pt-PT" -> Language.Portuguese
+        "ru-RU" -> Language.Russian
+        "ar-SA" -> Language.Arabic
+        "hi-IN" -> Language.Hindi
+        else -> throw IllegalArgumentException("Unsupported language prefix: ${id.take(5)}")
+    }
+    
     companion object {
         fun random() = entries.random()
+        fun random(language: Language) = entries.filter { it.language == language }.random()
     }
 }
