@@ -10,6 +10,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import me.avo.anki.AnkiConfig
+import java.net.ConnectException
 
 class AnkiViaHttpClient(
     val config: AnkiConfig,
@@ -29,9 +30,16 @@ class AnkiViaHttpClient(
         executeRequest(ankiRequest)
     }
 
-    private suspend fun executeRequest(ankiRequest: AnkiRequest): HttpResponse =
+    private suspend fun executeRequest(ankiRequest: AnkiRequest): HttpResponse = try {
         client.post(config.url) {
             contentType(ContentType.Application.Json)
             setBody(ankiRequest)
         }.also(::println)
+    } catch (ex: ConnectException) {
+        throw RuntimeException(
+            "Failed to connect to Anki server at ${config.url}. " +
+                    "Please ensure the AnkiConnect plugin is installed and running.",
+            ex
+        )
+    }
 }

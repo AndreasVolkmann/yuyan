@@ -30,8 +30,9 @@ class Jugen(
         val sentence = sentenceGenerator.generate(input)
         println(sentence)
         val ssml = ssmlBuilder.createSsml(sentence)
-        val audioResult = audioGenerator.generate(ssml)
-        val audioFile = AudioFileWriter().saveAudio(input, audioResult)
+        val audioResult = audioGenerator.generate(ssml.content)
+        val audioFile = AudioFileWriter().saveAudio("${input}_${ssml.voice.name}", audioResult)
+        println(audioFile)
         return JugenResult(sentence, audioFile)
     }
 
@@ -41,10 +42,8 @@ class Jugen(
         println(result)
         println()
         val dialog = DialogParser().parse(words, result)
-
         
         dialog.lines.forEach(::println)
-
 
         val ssml = ssmlBuilder.createDialogSsml(dialog)
         val audioResult = audioGenerator.generate(ssml)

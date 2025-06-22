@@ -25,7 +25,6 @@ class AudioGenerator(
 
     private fun getSynthesizer(config: AudioConfig): SpeechSynthesizer {
         val speechConfig = SpeechConfig.fromSubscription(config.subscriptionKey, config.region)
-        speechConfig.speechSynthesisVoiceName = config.voice.id
         return SpeechSynthesizer(speechConfig)
     }
 }
