@@ -44,11 +44,12 @@ class SsmlBuilderTest {
     
     @Test
     fun `createSsml should use voice matching specified language`() {
+        val language = Language.Chinese
         val config = AudioConfig("test-key", "test-region")
-        val ssmlBuilder = SsmlBuilder(Language.Chinese, config)
+        val ssmlBuilder = SsmlBuilder(language, config)
         
         val ssml = ssmlBuilder.createSsml("Hello World")
         
-        assertEquals(Language.Chinese, ssml.voice.language, "Voice should match the specified language")
+        assertEquals(language, ssml.voice.language, "Voice should match the specified language")
     }
 }
