@@ -5,6 +5,7 @@ import me.avo.jugen.dialog.Dialog
 import me.avo.jugen.dialog.DialogLine
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class SsmlBuilderTest {
@@ -48,6 +49,6 @@ class SsmlBuilderTest {
         
         val ssml = ssmlBuilder.createSsml("Hello World")
         
-        assertTrue(ssml.voice.language == Language.Chinese, "Voice should match the specified language")
+        assertEquals(Language.Chinese, ssml.voice.language, "Voice should match the specified language")
     }
 }

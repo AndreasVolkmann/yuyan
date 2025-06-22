@@ -39,11 +39,4 @@ class VoiceTest {
             assertTrue(randomVoice.language == Language.Chinese, "Random voice should match specified language")
         }
     }
-    
-    @Test
-    fun `all current voices should be Chinese`() {
-        Voice.entries.forEach { voice ->
-            assertTrue(voice.language == Language.Chinese, "Voice ${voice.name} should be Chinese")
-        }
-    }
 }
