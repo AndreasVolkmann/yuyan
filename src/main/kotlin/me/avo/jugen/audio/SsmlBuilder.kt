@@ -11,17 +11,14 @@ class SsmlBuilder(
     //language=XML
     fun createSsml(input: String): String = """
         <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${language.id}">
-            ${createSsmlForLine(input, config.voice)}
+            ${createSsmlForLine(input, Voice.random())}
         </speak>
         """.trimIndent()
 
     fun createDialogSsml(dialog: Dialog): String {
         val voiceTags = dialog.lines
-            .mapIndexed { i, l ->
-                createSsmlForLine(
-                    l.text,
-                    if (i % 2 == 0) config.voice else config.altVoice
-                )
+            .map { l ->
+                createSsmlForLine(l.text, Voice.random())
             }
             .joinToString("\n")
 
