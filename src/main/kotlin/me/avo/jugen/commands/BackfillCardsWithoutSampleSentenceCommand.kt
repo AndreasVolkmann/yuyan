@@ -15,7 +15,7 @@ class BackfillCardsWithoutSampleSentenceCommand(
 
     override suspend fun execute() = ankiService
         .findCardsWithoutSampleSentence()
-        .also { println("Cars without sample sentence: ${it.size}") }
+        .also { println("Cards without sample sentence: ${it.size}") }
         .take(10)
         .onEach(::println)
         .forEach { process(it) }
