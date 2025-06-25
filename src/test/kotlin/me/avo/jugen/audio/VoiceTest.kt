@@ -41,4 +41,30 @@ class VoiceTest {
             assertEquals(targetLanguage, randomVoice.language, "Random voice should match specified language")
         }
     }
+    
+    @Test
+    fun `voice language should match Language enum by id`() {
+        // Test that voice language mapping uses Language enum entries, not hardcoded values
+        val chineseVoice = Voice.Xiaochen
+        val japaneseVoice = Voice.Nanami
+        
+        assertEquals(Language.Chinese, chineseVoice.language)
+        assertEquals(Language.Japanese, japaneseVoice.language)
+        
+        // Verify the language id matches the voice id prefix
+        assertEquals(chineseVoice.id.take(5), chineseVoice.language.id)
+        assertEquals(japaneseVoice.id.take(5), japaneseVoice.language.id)
+    }
+    
+    @Test
+    fun `all voices should have valid language mapping`() {
+        // Test that every voice can be mapped to a valid language
+        Voice.entries.forEach { voice ->
+            val languagePrefix = voice.id.take(5)
+            val expectedLanguage = Language.entries.find { it.id == languagePrefix }
+            
+            assertTrue(expectedLanguage != null, "Voice ${voice.name} with prefix $languagePrefix should have a matching Language")
+            assertEquals(expectedLanguage, voice.language, "Voice ${voice.name} should map to correct language")
+        }
+    }
 }

@@ -53,20 +53,10 @@ enum class Voice(val id: String) {
     MasaruDragonHDLatest("ja-JP-Masaru:DragonHDLatestNeural"),
     NanamiDragonHDLatest("ja-JP-Nanami:DragonHDLatestNeural");
     
-    val language: Language get() = when (id.take(5)) {
-        "zh-CN" -> Chinese
-        "en-US" -> English
-        "ja-JP" -> Japanese
-        "ko-KR" -> Korean
-        "es-ES" -> Spanish
-        "fr-FR" -> French
-        "de-DE" -> German
-        "it-IT" -> Italian
-        "pt-PT" -> Portuguese
-        "ru-RU" -> Russian
-        "ar-SA" -> Arabic
-        "hi-IN" -> Hindi
-        else -> throw IllegalArgumentException("Unsupported language prefix: ${id.take(5)}")
+    val language: Language get() {
+        val languagePrefix = id.take(5)
+        return Language.entries.find { it.id == languagePrefix }
+            ?: throw IllegalArgumentException("Unsupported language prefix: $languagePrefix")
     }
     
     companion object {
