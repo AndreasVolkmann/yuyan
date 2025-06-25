@@ -1,6 +1,7 @@
 package me.avo.jugen.audio
 
 import me.avo.jugen.Language
+import me.avo.jugen.Language.*
 
 enum class Voice(val id: String) {
     Xiaochen("zh-CN-XiaochenNeural"), // best so far
@@ -35,7 +36,7 @@ enum class Voice(val id: String) {
     Xiaoxiao2DragonHDFlashLatest("zh-CN-Xiaoxiao2:DragonHDFlashLatestNeural"),
     YunfanMultilingual("zh-CN-YunfanMultilingualNeural"),
     YunxiaoDragonHDFlashLatest("zh-CN-Yunxiao:DragonHDFlashLatestNeural"),
-    YunxiaoMultilingual("zh-CN-YunxiaoMultilingualNeural"),
+    YunxiaoMultilingual("zh-CN-YunxiaoMultilingualNeural"), // 不错
     YunyiDragonHDFlashLatest("zh-CN-Yunyi:DragonHDFlashLatestNeural"),
     XiaochenDragonHDLatest("zh-CN-Xiaochen:DragonHDLatestNeural"),
     YunfanDragonHDLatest("zh-CN-Yunfan:DragonHDLatestNeural"),
@@ -53,18 +54,18 @@ enum class Voice(val id: String) {
     NanamiDragonHDLatest("ja-JP-Nanami:DragonHDLatestNeural");
     
     val language: Language get() = when (id.take(5)) {
-        "zh-CN" -> Language.Chinese
-        "en-US" -> Language.English
-        "ja-JP" -> Language.Japanese
-        "ko-KR" -> Language.Korean
-        "es-ES" -> Language.Spanish
-        "fr-FR" -> Language.French
-        "de-DE" -> Language.German
-        "it-IT" -> Language.Italian
-        "pt-PT" -> Language.Portuguese
-        "ru-RU" -> Language.Russian
-        "ar-SA" -> Language.Arabic
-        "hi-IN" -> Language.Hindi
+        "zh-CN" -> Chinese
+        "en-US" -> English
+        "ja-JP" -> Japanese
+        "ko-KR" -> Korean
+        "es-ES" -> Spanish
+        "fr-FR" -> French
+        "de-DE" -> German
+        "it-IT" -> Italian
+        "pt-PT" -> Portuguese
+        "ru-RU" -> Russian
+        "ar-SA" -> Arabic
+        "hi-IN" -> Hindi
         else -> throw IllegalArgumentException("Unsupported language prefix: ${id.take(5)}")
     }
     
