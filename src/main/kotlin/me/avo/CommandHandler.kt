@@ -25,5 +25,5 @@ class CommandHandler(config: JugenConfig) {
 
     suspend fun execute(command: String?) = commands.firstOrNull { it.id == (command ?: "chat") }
         ?.execute()
-        ?: throw IllegalArgumentException("Unknown command: $command")
+        ?: throw IllegalArgumentException("Unknown command: $command. Available commands: ${commands.map { it.id }.joinToString(", ")}")
 }
