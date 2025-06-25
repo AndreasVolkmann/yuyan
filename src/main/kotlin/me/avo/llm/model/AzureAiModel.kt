@@ -35,12 +35,13 @@ class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
     }
 
     override suspend fun execute(chat: Chat): String {
+        val body = constructRequestBody(chat)
         val response = client.post(url) {
             header(HttpHeaders.Authorization, "Bearer ${config.apiKey}")
             contentType(ContentType.Application.Json)
-            setBody(constructRequestBody(chat))
+            setBody(body)
         }
-        println(response)
+        println("$response ($body)")
         
         if (response.status.isSuccess()) {
             val responseBody: ResponseBody = response.body()

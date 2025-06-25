@@ -1,7 +1,6 @@
 package me.avo.jugen.audio
 
 import me.avo.jugen.Language
-import me.avo.jugen.Language.*
 
 enum class Voice(val id: String) {
     Xiaochen("zh-CN-XiaochenNeural"), // best so far

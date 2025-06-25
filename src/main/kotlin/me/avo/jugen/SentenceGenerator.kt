@@ -10,7 +10,7 @@ class SentenceGenerator(val languageModel: LargeLanguageModel, val config: Jugen
     suspend fun generate(word: String): String {
         val chat = Chat(
             mutableListOf(getMessage(word)),
-            ModelOptions(maxTokens = 150)
+            ModelOptions(maxTokens = 200)
         )
 
         val result = languageModel.execute(chat)
