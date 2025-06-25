@@ -15,7 +15,8 @@ import me.avo.llm.messages.RequestBody
 import me.avo.llm.messages.ResponseBody
 
 class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
-    private val url = "https://${config.host}/v1/chat/completions"
+    private val url = if (config.isServiceEndpoint) "https://${config.host}/models/chat/completions?api-version=2024-05-01-preview"
+    else "https://${config.host}/v1/chat/completions"
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -56,7 +57,8 @@ class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
             chat.messages,
             modelOptions.maxTokens,
             modelOptions.temperature.toFloat(),
-            modelOptions.topP.toFloat()
+            modelOptions.topP.toFloat(),
+            model = if (config.isServiceEndpoint) config.id else null
         )
     }
 }

@@ -12,5 +12,7 @@ data class RequestBody(
     val temperature: Float,
 
     @SerialName("top_p")
-    val topP: Float
+    val topP: Float,
+    
+    val model: String? = null
 )
