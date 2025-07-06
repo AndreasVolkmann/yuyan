@@ -30,7 +30,7 @@ class DictionaryDecoderTest {
             phraseOffset = 19324,
             keycodeOffset = 19332,
             phrase = "酒乱",
-            keycodes = listOf("syu", "ra", "nn")
+            keycodes = listOf("shu", "ra", "nn")
         )
         assertEntry(entry, expected, "Entry $index")
     }
@@ -44,7 +44,7 @@ class DictionaryDecoderTest {
             phraseOffset = 0x4b6c,
             keycodeOffset = 0x4b78,
             phrase = "シシャモ",
-            keycodes = listOf("si", "sya", "mo")
+            keycodes = listOf("si", "sha", "mo")
         )
         assertEntry(entry, expected, "Entry $index")
     }
@@ -79,17 +79,17 @@ class DictionaryDecoderTest {
     
     @TestFactory
     fun decode() = listOf(
-        ExpectedEntry(0x9, 0xf54, 0xf5c, "ＤＨ", listOf("E", "I")),
-        ExpectedEntry(0xa, 0xf60, 0xf68, "ＯＮ", listOf("P", "O")),
-        ExpectedEntry(0xb, 0xf6c, 0xf74, "ＯＬ", listOf("P", "M")),
+        ExpectedEntry(0x9, 0xf54, 0xf5c, "ＤＨ", listOf("D", "H")),
+        ExpectedEntry(0xa, 0xf60, 0xf68, "ＯＮ", listOf("O", "N")),
+        ExpectedEntry(0xb, 0xf6c, 0xf74, "ＯＬ", listOf("O", "L")),
         ExpectedEntry(0xb, 0xf78, 0xf7c, "愛", listOf("a", "i")),
-        ExpectedEntry(0xc, 0xf80, 0xf88, "ＩＱ", listOf("J", "R")),
+        ExpectedEntry(0xc, 0xf80, 0xf88, "ＩＱ", listOf("I", "Q")),
         ExpectedEntry(0xc, 0xf8c, 0xf90, "王", listOf("o", "u")),
         ExpectedEntry(0xc, 0xf94, 0xf98, "茶", listOf("tya")),
         ExpectedEntry(0xd, 0xf9c, 0xfa0, "穴", listOf("a", "na")),
         ExpectedEntry(0xd, 0xfa4, 0xfac, "海女", listOf("a", "ma")),
         ExpectedEntry(0xd, 0xfb0, 0xfac, "アマ", listOf("a", "ma")),
-        ExpectedEntry(0xd, 0xfb8, 0xfc0, "ＤＨＡ", listOf("E", "I", "B")),
+        ExpectedEntry(0xd, 0xfb8, 0xfc0, "ＤＨＡ", listOf("D", "H", "A")),
         ExpectedEntry(0xe, 0xfc4, 0xfcc, "あざ", listOf("a", "za")),
         ExpectedEntry(0xe, 0xfd0, 0xfd4, "足", listOf("a", "si")),
         ExpectedEntry(0xe, 0xfd8, 0xfdc, "汗", listOf("a", "se")),
