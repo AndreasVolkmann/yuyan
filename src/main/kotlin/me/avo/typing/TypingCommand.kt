@@ -7,6 +7,7 @@ import me.avo.typing.dictionary.DictionaryEncoder
 import me.avo.typing.dictionary.Entry
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 
 class TypingCommand(
     private val ankiService: AnkiService) : Command {
@@ -20,13 +21,17 @@ class TypingCommand(
         if (cards.isEmpty()) {
             throw IllegalStateException("No cards found under learning with Pinyin.2 and Traditional fields.")
         }
+        println("Found ${cards.size} cards under learning with Pinyin.2 and Traditional fields.")
         
         generate(fileName, cards.map(::cardToEntry))
     }
 
     private fun generate(file: String, newEntries: List<Entry>) {
         val newBytes = DictionaryEncoder().encode(newEntries)
-        Files.write(Paths.get("output", file), newBytes)
+        val outputPath = Paths.get("output", file)
+        Files.createDirectories(outputPath.parent)
+        Files.write(outputPath, newBytes, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+        println("Generated file: $outputPath")
     }
 
     private fun cardToEntry(card: AnkiCard): Entry {
