@@ -21,7 +21,7 @@ enum class Voice(val id: String) {
     XiaoxiaoMultilingual("zh-CN-XiaoxiaoMultilingualNeural"),
     Xiaoyan("zh-CN-XiaoyanNeural"),
     Xiaoyou("zh-CN-XiaoyouNeural"),
-    XiaoyuMultilingual4("zh-CN-XiaoyuMultilingualNeural4"),
+    XiaoyuMultilingual("zh-CN-XiaoyuMultilingualNeural"),
     Xiaozhen("zh-CN-XiaozhenNeural"),
     Yunfeng("zh-CN-YunfengNeural"),
     Yunhao("zh-CN-YunhaoNeural"),
