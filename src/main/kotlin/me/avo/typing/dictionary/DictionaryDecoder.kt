@@ -1,4 +1,4 @@
-package me.avo.typing
+package me.avo.typing.dictionary
 
 class DictionaryDecoder : Encoder() {
     fun process(command: DictionaryCommand): DictionaryResult {

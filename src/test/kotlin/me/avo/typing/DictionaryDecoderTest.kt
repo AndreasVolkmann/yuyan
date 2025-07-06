@@ -1,5 +1,8 @@
 package me.avo.typing
 
+import me.avo.typing.dictionary.DictionaryCommand
+import me.avo.typing.dictionary.DictionaryDecoder
+import me.avo.typing.dictionary.DictionaryEntry
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.Test

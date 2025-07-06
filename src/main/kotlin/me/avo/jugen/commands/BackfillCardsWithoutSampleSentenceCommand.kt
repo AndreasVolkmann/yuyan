@@ -1,5 +1,6 @@
 package me.avo.jugen.commands
 
+import me.avo.Command
 import me.avo.anki.AnkiCard
 import me.avo.anki.AnkiConfig
 import me.avo.anki.service.AnkiService
@@ -9,14 +10,14 @@ class BackfillCardsWithoutSampleSentenceCommand(
     private val ankiService: AnkiService,
     private val jugen: Jugen,
     private val ankiConfig: AnkiConfig
-) : JugenCommand {
+) : Command {
     
     override val id = "backfill"
 
-    override suspend fun execute() = ankiService
+    override suspend fun execute(arguments: List<String>) = ankiService
         .findCardsWithoutSampleSentence()
         .also { println("Cards without sample sentence: ${it.size}") }
-        .take(10)
+        .take(1)
         .onEach(::println)
         .forEach { process(it) }
 

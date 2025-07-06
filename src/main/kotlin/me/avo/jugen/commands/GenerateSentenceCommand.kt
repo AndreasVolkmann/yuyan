@@ -1,13 +1,14 @@
 package me.avo.jugen.commands
 
+import me.avo.Command
 import me.avo.jugen.Jugen
 
 class GenerateSentenceCommand(
     private val jugen: Jugen
-) : JugenCommand {
+) : Command {
     override val id = "generate-sentence"
 
-    override suspend fun execute() {
+    override suspend fun execute(arguments: List<String>) {
         jugen.generateSentence()
     }
 }

@@ -1,17 +1,17 @@
 package me.avo.jugen.commands
 
+import me.avo.Command
 import me.avo.anki.service.AnkiService
 import me.avo.jugen.Jugen
 
 class GenerateComprehensionForDifficultWordsCommand(
     private val ankiService: AnkiService,
     private val jugen: Jugen
-)
-    : JugenCommand {
+) : Command {
 
     override val id: String = "generate_comprehension_for_difficult_words"
 
-    override suspend fun execute() {
+    override suspend fun execute(arguments: List<String>) {
         val words = ankiService
             .findDifficultCards()
             .mapNotNull { it.fields["Simplified"]?.value }

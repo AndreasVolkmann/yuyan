@@ -10,6 +10,6 @@ suspend fun main(args: Array<String>) {
     val command = args.firstOrNull() ?: throw IllegalArgumentException("No command provided. Please specify a command to execute.")
     val config = Arkenv.parse<JugenConfig>(args) { +EnvironmentVariableFeature(dotEnvFilePath = ".env") }
     val handler = CommandHandler(config)
-    handler.execute(command)
+    handler.execute(command, args.drop(1))
 }
 

@@ -1,4 +1,4 @@
-package me.avo.typing
+package me.avo.typing.dictionary
 
 data class Entry(
     val phrase: String,

@@ -31,7 +31,7 @@ class AnkiService(
         return client.execute(request)
     }
     
-    private suspend fun findCards(query: String): List<AnkiCard> {
+    suspend fun findCards(query: String): List<AnkiCard> {
         val cardIds = findCardIds("deck:${config.deckName} $query")
         return client.execute(factory.getCards(cardIds))
     }

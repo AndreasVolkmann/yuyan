@@ -1,16 +1,17 @@
 package me.avo.jugen.commands
 
 import me.avo.Chat
+import me.avo.Command
 import me.avo.llm.model.LargeLanguageModel
 import java.nio.charset.Charset
 import java.nio.charset.MalformedInputException
 
 class ChatCommand(
     private val model: LargeLanguageModel
-): JugenCommand {
+): Command {
     override val id = "chat"
 
-    override suspend fun execute() {
+    override suspend fun execute(arguments: List<String>) {
         val chat = Chat()
 
         while (true) {

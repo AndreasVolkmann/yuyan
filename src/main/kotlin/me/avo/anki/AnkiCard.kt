@@ -13,10 +13,13 @@ data class AnkiCard(
     val left: Int,
     val fields: Map<String, CardField>,
 ) {
+    fun getFieldValue(key: String): String =
+        fields[key]?.value
+            ?: throw IllegalStateException("Field '$key' is missing in card: $cardId")
 }
 
 
-@Serializable 
+@Serializable
 data class CardField(
     val value: String,
     val order: Int
