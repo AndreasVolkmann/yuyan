@@ -5,5 +5,6 @@ data class AnkiConfig(
     val deckName: String,
     val targetFieldName: String = "Simplified",
     val sampleSentenceFieldName: String = "SentenceSimplified",
+    val sentenceAudioFieldName: String = "SentenceAudio",
 ) {
 }

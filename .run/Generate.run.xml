@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Generate" type="JetRunConfigurationType">
+    <option name="MAIN_CLASS_NAME" value="me.avo.MainKt" />
+    <module name="llm.main" />
+    <option name="PROGRAM_PARAMETERS" value="generate-sentence" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

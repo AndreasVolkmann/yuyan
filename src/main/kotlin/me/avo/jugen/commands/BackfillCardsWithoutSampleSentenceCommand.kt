@@ -11,7 +11,6 @@ class BackfillCardsWithoutSampleSentenceCommand(
     private val jugen: Jugen,
     private val ankiConfig: AnkiConfig
 ) : Command {
-    
     override val id = "backfill"
 
     override suspend fun execute(arguments: List<String>) = ankiService
@@ -22,17 +21,18 @@ class BackfillCardsWithoutSampleSentenceCommand(
         .forEach { process(it) }
 
     private suspend fun process(card: AnkiCard) {
-        val targetTerm = card.fields[ankiConfig.targetFieldName]?.value
-        if (targetTerm != null) {
-            val (sentence, audioFile) = jugen.generateSentence(targetTerm)
-            val noteIds = ankiService.findCardNoteIds(card)
-            val noteId = noteIds.firstOrNull()
-            if (noteId != null) {
-                ankiService.updateCardSampleSentence(noteId, sentence)
-                ankiService.updateCardAudio(noteId, audioFile.absolutePath, "SentenceAudio")
-            }
-        } else {
-            println("No target term found for card: ${card.cardId}")
+        card.fields[ankiConfig.targetFieldName]?.value
+            ?.let { backfill(it, card) }
+            ?: println("No target term found for card: ${card.cardId}")
+    }
+
+    private suspend fun backfill(targetTerm: String, card: AnkiCard) {
+        val (sentence, audioFile) = jugen.generateSentence(targetTerm)
+        val noteIds = ankiService.findCardNoteIds(card)
+        val noteId = noteIds.firstOrNull()
+        if (noteId != null) {
+            ankiService.updateCardSampleSentence(noteId, sentence)
+            ankiService.updateCardAudio(noteId, audioFile.absolutePath, ankiConfig.sentenceAudioFieldName)
         }
     }
 }
