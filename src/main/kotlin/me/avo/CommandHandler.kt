@@ -18,7 +18,7 @@ class CommandHandler(config: JugenConfig) {
     )
     private val commands = listOf(
         GenerateSentenceCommand(jugen),
-        BackfillCardsWithoutSampleSentenceCommand(ankiService, jugen, config.ankiConfig),
+        BackfillCardsWithoutSampleSentenceCommand(ankiService, jugen, config),
         GenerateComprehensionForDifficultWordsCommand(ankiService, jugen),
         ChatCommand(model),
         TextToSpeechCommand(config),
