@@ -23,8 +23,9 @@ class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
             json(Json { ignoreUnknownKeys = true })
         }
         install(HttpRequestRetry) {
-            retryIf { _, response -> 
-                response.status == HttpStatusCode.TooManyRequests 
+            retryIf { _, response ->
+                println("Request failed: ${response.status.value} - ${response.status.description}")
+                response.status == HttpStatusCode.TooManyRequests
             }
             exponentialDelay(base = 5.0, maxDelayMs = 30000)
             modifyRequest { request ->

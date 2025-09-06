@@ -2,26 +2,26 @@ package me.avo.jugen.commands
 
 import me.avo.Command
 import me.avo.anki.AnkiCard
-import me.avo.anki.AnkiConfig
 import me.avo.anki.service.AnkiService
 import me.avo.jugen.Jugen
+import me.avo.jugen.JugenConfig
 
 class BackfillCardsWithoutSampleSentenceCommand(
     private val ankiService: AnkiService,
     private val jugen: Jugen,
-    private val ankiConfig: AnkiConfig
+    private val config: JugenConfig
 ) : Command {
     override val id = "backfill"
 
     override suspend fun execute(arguments: List<String>) = ankiService
         .findCardsWithoutSampleSentence()
         .also { println("Cards without sample sentence: ${it.size}") }
-        .take(1)
+        .take(config.generateCount)
         .onEach(::println)
         .forEach { process(it) }
 
     private suspend fun process(card: AnkiCard) {
-        card.fields[ankiConfig.targetFieldName]?.value
+        card.fields[config.ankiConfig.targetFieldName]?.value
             ?.let { backfill(it, card) }
             ?: println("No target term found for card: ${card.cardId}")
     }
@@ -32,7 +32,7 @@ class BackfillCardsWithoutSampleSentenceCommand(
         val noteId = noteIds.firstOrNull()
         if (noteId != null) {
             ankiService.updateCardSampleSentence(noteId, sentence)
-            ankiService.updateCardAudio(noteId, audioFile.absolutePath, ankiConfig.sentenceAudioFieldName)
+            ankiService.updateCardAudio(noteId, audioFile.absolutePath, config.ankiConfig.sentenceAudioFieldName)
         }
     }
 }

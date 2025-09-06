@@ -7,7 +7,7 @@ import me.avo.jugen.audio.AudioConfig
 import me.avo.llm.model.ModelConfig
 
 class JugenConfig(
-    val generate: Boolean = true
+    val generateCount: Int = 1
 ) {
 
     val language: Language by argument("-l", "--language") {

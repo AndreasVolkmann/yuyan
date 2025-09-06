@@ -6,6 +6,7 @@ import me.avo.anki.service.AnkiService
 import me.avo.typing.dictionary.DictionaryEncoder
 import me.avo.typing.dictionary.Entry
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 
@@ -15,6 +16,7 @@ class TypingCommand(
 
     override suspend fun execute(arguments: List<String>) {
         val fileName = arguments.getOrNull(0) ?: throw IllegalArgumentException("File name must be provided as the first argument.")
+        val destinationPath = arguments.getOrNull(1) ?: "output"
         
         // Query for cards under learning with Pinyin.2 and Traditional.
         val cards = ankiService.findCards("prop:due=0 Pinyin.2:_* Traditional:_*")
@@ -22,13 +24,13 @@ class TypingCommand(
             throw IllegalStateException("No cards found under learning with Pinyin.2 and Traditional fields.")
         }
         println("Found ${cards.size} cards under learning with Pinyin.2 and Traditional fields.")
-        
-        generate(fileName, cards.map(::cardToEntry))
+     
+        val filePath = Paths.get(destinationPath, fileName)  
+        generate(filePath, cards.map(::cardToEntry))
     }
 
-    private fun generate(file: String, newEntries: List<Entry>) {
+    private fun generate(outputPath: Path, newEntries: List<Entry>) {
         val newBytes = DictionaryEncoder().encode(newEntries)
-        val outputPath = Paths.get("output", file)
         Files.createDirectories(outputPath.parent)
         Files.write(outputPath, newBytes, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
         println("Generated file: $outputPath")
