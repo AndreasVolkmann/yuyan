@@ -1,6 +1,7 @@
-package me.avo.jugen
+package me.avo.jugen.generation
 
 import me.avo.Chat
+import me.avo.jugen.JugenConfig
 import me.avo.llm.messages.ChatMessage
 import me.avo.llm.model.LargeLanguageModel
 import me.avo.llm.model.ModelOptions
@@ -21,7 +22,7 @@ class SentenceGenerator(val languageModel: LargeLanguageModel, val config: Jugen
         "user",
         """
         |Generate a single sentence in ${config.language.name} for learning purposes with the word $word.
-        |Follow the theme: ${config.theme}
+        |Follow one of the themes best fitting: ${config.theme}
         |No other response
         """.trimMargin()
     )

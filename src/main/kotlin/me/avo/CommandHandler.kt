@@ -22,7 +22,7 @@ class CommandHandler(config: JugenConfig) {
         GenerateComprehensionForDifficultWordsCommand(ankiService, jugen),
         ChatCommand(model),
         TextToSpeechCommand(config),
-        GenerateImageCommand(config.imageModelConfig),
+        GenerateImageCommand(config.imageModelConfig, model, config),
         TypingCommand(ankiService),
     )
 

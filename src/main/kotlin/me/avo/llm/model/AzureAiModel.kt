@@ -24,7 +24,7 @@ class AzureAiModel(val config: ModelConfig) : LargeLanguageModel {
         }
         install(HttpRequestRetry) {
             retryIf { _, response ->
-                println("Request failed: ${response.status.value} - ${response.status.description}")
+                println("Response: ${response.status.value} - ${response.status.description}")
                 response.status == HttpStatusCode.TooManyRequests
             }
             exponentialDelay(base = 5.0, maxDelayMs = 30000)

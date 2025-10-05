@@ -17,7 +17,7 @@ enum class Voice(val id: String) {
     Xiaorou("zh-CN-XiaorouNeural"),
     Xiaorui("zh-CN-XiaoruiNeural"),
     Xiaoshuang("zh-CN-XiaoshuangNeural"),
-    XiaoxiaoDialects("zh-CN-XiaoxiaoDialectsNeural"),
+//    XiaoxiaoDialects("zh-CN-XiaoxiaoDialectsNeural"),
     XiaoxiaoMultilingual("zh-CN-XiaoxiaoMultilingualNeural"),
     Xiaoyan("zh-CN-XiaoyanNeural"),
     Xiaoyou("zh-CN-XiaoyouNeural"),
@@ -32,7 +32,7 @@ enum class Voice(val id: String) {
     Yunze("zh-CN-YunzeNeural"),
     XiaochenDragonHDFlashLatest("zh-CN-Xiaochen:DragonHDFlashLatestNeural"),
     XiaoxiaoDragonHDFlashLatest("zh-CN-Xiaoxiao:DragonHDFlashLatestNeural"),
-    Xiaoxiao2DragonHDFlashLatest("zh-CN-Xiaoxiao2:DragonHDFlashLatestNeural"),
+//    Xiaoxiao2DragonHDFlashLatest("zh-CN-Xiaoxiao2:DragonHDFlashLatestNeural"),
     YunfanMultilingual("zh-CN-YunfanMultilingualNeural"),
     YunxiaoDragonHDFlashLatest("zh-CN-Yunxiao:DragonHDFlashLatestNeural"),
     YunxiaoMultilingual("zh-CN-YunxiaoMultilingualNeural"), // 不错
